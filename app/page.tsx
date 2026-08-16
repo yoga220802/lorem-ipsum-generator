@@ -1,69 +1,148 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { Navbar, ActiveTab } from "@/components/Navbar";
+import { LoremGenerator } from "@/components/LoremGenerator";
+import { DummyUserGenerator } from "@/components/DummyUserGenerator";
+import { ImagePlaceholderGenerator } from "@/components/ImagePlaceholderGenerator";
+import { HistoryDrawer, HistoryItem } from "@/components/HistoryDrawer";
+import { ToastContainer, ToastMessage } from "@/components/Toast";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<ActiveTab>("lorem");
+  const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  // Load history from localStorage on client side
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("sakode_lorem_history");
+      if (saved) {
+        setHistory(JSON.parse(saved));
+      }
+    } catch (err) {
+      console.error("Failed to load history from localStorage", err);
+    }
+  }, []);
+
+  // Save history to localStorage
+  const handleSaveToHistory = (text: string, themeName: string) => {
+    const newItem: HistoryItem = {
+      id: `hist-${Date.now()}`,
+      themeName,
+      text: text.slice(0, 300) + (text.length > 300 ? "..." : ""),
+      timestamp: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
+    };
+
+    const updated = [newItem, ...history.slice(0, 19)]; // Keep latest 20
+    setHistory(updated);
+    try {
+      localStorage.setItem("sakode_lorem_history", JSON.stringify(updated));
+    } catch (err) {
+      console.error("Failed to save history", err);
+    }
+  };
+
+  const handleClearHistory = () => {
+    setHistory([]);
+    try {
+      localStorage.removeItem("sakode_lorem_history");
+    } catch (err) {
+      console.error("Failed to clear history", err);
+    }
+  };
+
+  // Toast Notification Helper
+  const handleShowToast = (
+    title: string,
+    message?: string,
+    type: "success" | "error" | "info" = "success"
+  ) => {
+    const id = `toast-${Date.now()}-${Math.random()}`;
+    setToasts((prev) => [...prev, { id, title, message, type }]);
+  };
+
+  const handleDismissToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+      <div>
+        {/* Navigation Bar */}
+        <Navbar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          historyCount={history.length}
+          onOpenHistory={() => setIsHistoryOpen(true)}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+
+        {/* Main Hero Header */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+          {/* Tab Banner Heading */}
+          <div className="text-center max-w-2xl mx-auto mb-8 space-y-2">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              {activeTab === "lorem" && (
+                <>
+                  Generator <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Lorem Ipsum</span> & Teks Dummy
+                </>
+              )}
+              {activeTab === "users" && (
+                <>
+                  Generator <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Data User</span> Indonesia
+                </>
+              )}
+              {activeTab === "image" && (
+                <>
+                  Generator <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Placeholder Gambar</span> UI
+                </>
+              )}
+            </h1>
+
+            <p className="text-sm text-slate-400">
+              {activeTab === "lorem" &&
+                "Hasilkan teks Latin klasik, nusantara Indonesia, tech, bisnis buzzwords, hingga slang anak muda untuk placeholder desain UI Anda."}
+              {activeTab === "users" &&
+                "Hasilkan sampel profil pengguna lengkap dengan NIK, email, kontak, pekerjaan, dan foto avatar khas Indonesia."}
+              {activeTab === "image" &&
+                "Hasilkan URL placeholder gambar dengan dimensi kustom, rasio aspek, warna latar, dan overlay teks."}
+            </p>
+          </div>
+
+          {/* Active Tab View */}
+          {activeTab === "lorem" && (
+            <LoremGenerator
+              onShowToast={handleShowToast}
+              onSaveToHistory={handleSaveToHistory}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+          )}
+
+          {activeTab === "users" && (
+            <DummyUserGenerator onShowToast={handleShowToast} />
+          )}
+
+          {activeTab === "image" && (
+            <ImagePlaceholderGenerator onShowToast={handleShowToast} />
+          )}
+        </main>
+      </div>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* History Drawer Modal */}
+      <HistoryDrawer
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        history={history}
+        onClearHistory={handleClearHistory}
+        onShowToast={handleShowToast}
+      />
+
+      {/* Global Toast Notifications */}
+      <ToastContainer toasts={toasts} onDismiss={handleDismissToast} />
     </div>
   );
 }
