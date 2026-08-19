@@ -28,52 +28,52 @@ export function UserControls({
   copied
 }: UserControlsProps) {
   return (
-    <div className="space-y-4">
-      {/* Top Header Card */}
-      <div className="glass-panel p-5 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+    <div className="sakode-card space-y-0 overflow-hidden">
+      {/* Top Header Card Section */}
+      <div className="sakode-card-section flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Users className="w-5 h-5 text-indigo-400" />
-            Generator Data User Indonesia (Dummy User)
-          </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Buat data profil pengguna realistis lengkap dengan NIK, email, no HP, dan kota untuk pengujian API/UI.
+          <div className="sakode-lbl mb-1">
+            <div className="sakode-lbl-num">1</div>
+            <span>Generator Profil Pengguna Indonesia</span>
+          </div>
+          <p className="text-xs font-semibold text-[var(--text-muted)]">
+            Hasilkan sampel identitas pengguna lengkap (NIK 16-digit, email, no HP, pekerjaan, perusahaan) untuk seeding database & API.
           </p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={onGenerate}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-colors shadow-md shadow-indigo-600/20 cursor-pointer"
+            className="btn-sakode-primary text-xs py-2 px-3.5"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
             <span>Generate Baru</span>
           </button>
 
           <button
             onClick={onCopyJSON}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
+            className="btn-sakode-secondary text-xs py-2 px-3.5"
           >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-[#10b981]" /> : <Copy className="w-3.5 h-3.5 text-[#bc71fe]" />}
             <span>{copied ? "Tersalin!" : "Salin JSON"}</span>
           </button>
 
           <button
             onClick={onDownloadCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs border border-slate-700 transition-colors cursor-pointer"
+            className="btn-sakode-secondary text-xs py-2 px-3.5"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-3.5 h-3.5 text-[#f9723b]" />
             <span>Unduh CSV</span>
           </button>
         </div>
       </div>
 
       {/* Filter & Options Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 glass-panel p-4 rounded-xl">
+      <div className="sakode-card-section bg-[var(--surface-subtle)] flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4 w-full sm:w-auto">
-          <label className="text-xs font-semibold text-slate-300 flex items-center gap-2">
+          <label className="text-xs font-bold text-[var(--text)] flex items-center gap-2">
             <span>Jumlah Data:</span>
-            <span className="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 font-bold text-sm">
+            <span className="px-2 py-0.5 rounded-[4px] bg-[var(--primary-soft)] text-[var(--text)] border border-[color-mix(in_srgb,var(--primary)_40%,transparent)] font-extrabold text-xs">
               {count}
             </span>
           </label>
@@ -83,38 +83,42 @@ export function UserControls({
             max={30}
             value={count}
             onChange={(e) => setCount(parseInt(e.target.value) || 1)}
-            className="w-32 sm:w-48 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+            className="w-32 sm:w-48"
           />
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-64">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-500" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[var(--text-muted)]" />
             <input
               type="text"
-              placeholder="Cari nama, kota, pekerjaan..."
+              placeholder="Cari nama, kota, profesi..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-slate-900 border border-slate-800 text-slate-200 focus:outline-none focus:border-indigo-500"
+              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-[var(--r-sm)] bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]"
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-1 bg-[var(--bg)] p-1 rounded-[var(--r-sm)] border border-[var(--border)]">
             <button
               onClick={() => setViewMode("cards")}
-              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === "cards" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
+              className={`p-1.5 rounded-[6px] text-xs transition-colors cursor-pointer ${
+                viewMode === "cards"
+                  ? "bg-[var(--surface)] text-[var(--text)] shadow-xs border border-[var(--border)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text)]"
               }`}
-              title="Kartu Profil"
+              title="Tampilan Kartu"
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode("table")}
-              className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === "table" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
+              className={`p-1.5 rounded-[6px] text-xs transition-colors cursor-pointer ${
+                viewMode === "table"
+                  ? "bg-[var(--surface)] text-[var(--text)] shadow-xs border border-[var(--border)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text)]"
               }`}
-              title="Tabel Data"
+              title="Tampilan Tabel"
             >
               <TableIcon className="w-4 h-4" />
             </button>

@@ -38,24 +38,26 @@ export function GeneratorControls({
   const maxCount = options.type === "words" ? 200 : 50;
 
   return (
-    <div className="glass-panel p-5 rounded-2xl space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-        <h3 className="font-bold text-slate-200 flex items-center gap-2 text-base">
-          <Sliders className="w-4 h-4 text-indigo-400" />
-          Pengaturan Generator
-        </h3>
+    <div className="sakode-card">
+      {/* Card Header */}
+      <div className="sakode-card-section flex items-center justify-between">
+        <div className="sakode-lbl mb-0">
+          <div className="sakode-lbl-num">2</div>
+          <span>Pengaturan Generator</span>
+        </div>
         <button
           onClick={onGenerate}
-          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow-md shadow-indigo-600/20 cursor-pointer"
+          className="btn-sakode-primary text-xs py-1.5 px-3"
+          title="Acak Ulang (Ctrl + Enter)"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isPending ? "animate-spin" : ""}`} />
-          <span>Acak Ulang</span>
+          <span>Generate Ulang</span>
         </button>
       </div>
 
       {/* Output Type Selector */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+      <div className="sakode-card-section space-y-2">
+        <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block">
           Tipe Output
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -63,10 +65,10 @@ export function GeneratorControls({
             <button
               key={item.id}
               onClick={() => setOptions((prev) => ({ ...prev, type: item.id }))}
-              className={`px-3 py-2 rounded-lg text-xs font-medium border text-center transition-all cursor-pointer ${
+              className={`py-2 px-2 rounded-[var(--r-sm)] text-xs font-bold border transition-all cursor-pointer text-center ${
                 options.type === item.id
-                  ? "bg-indigo-600/30 border-indigo-500 text-indigo-200 font-semibold"
-                  : "bg-slate-900/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                  ? "bg-[#71cffe] text-[#172033] border-[#71cffe] shadow-xs"
+                  : "bg-[var(--surface)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-hi)]"
               }`}
             >
               {item.label}
@@ -76,12 +78,12 @@ export function GeneratorControls({
       </div>
 
       {/* Quantity Slider */}
-      <div className="space-y-2">
+      <div className="sakode-card-section space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
             Jumlah ({options.type === "paragraphs" ? "Paragraf" : options.type === "sentences" ? "Kalimat" : "Item"})
           </label>
-          <span className="text-sm font-bold px-2.5 py-0.5 rounded-md bg-indigo-950 text-indigo-300 border border-indigo-800">
+          <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-[var(--r-sm)] bg-[var(--primary-soft)] text-[var(--text)] border border-[color-mix(in_srgb,var(--primary)_40%,transparent)]">
             {options.count}
           </span>
         </div>
@@ -91,15 +93,14 @@ export function GeneratorControls({
           max={maxCount}
           value={options.count}
           onChange={(e) => setOptions((prev) => ({ ...prev, count: parseInt(e.target.value) || 1 }))}
-          className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
         />
-        <div className="flex items-center justify-between gap-1 text-[11px] text-slate-400">
+        <div className="flex items-center justify-between gap-1 text-[11px] font-bold text-[var(--text-muted)] pt-1">
           <span>Quick:</span>
           {QUICK_COUNTS.map((num) => (
             <button
               key={num}
               onClick={() => setOptions((prev) => ({ ...prev, count: num }))}
-              className="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-colors cursor-pointer"
+              className="px-2 py-0.5 rounded-[4px] bg-[var(--surface-subtle)] hover:bg-[var(--border)] border border-[var(--border)] text-[var(--text)] transition-colors cursor-pointer"
             >
               {num}
             </button>
@@ -109,8 +110,8 @@ export function GeneratorControls({
 
       {/* Paragraph Length (if paragraphs) */}
       {options.type === "paragraphs" && (
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+        <div className="sakode-card-section space-y-2">
+          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block">
             Panjang Paragraf
           </label>
           <div className="grid grid-cols-4 gap-2">
@@ -118,10 +119,10 @@ export function GeneratorControls({
               <button
                 key={len.id}
                 onClick={() => setOptions((prev) => ({ ...prev, paragraphLength: len.id }))}
-                className={`py-1.5 rounded-lg text-xs font-medium border text-center transition-all cursor-pointer ${
+                className={`py-1.5 rounded-[var(--r-sm)] text-xs font-bold border text-center transition-all cursor-pointer ${
                   options.paragraphLength === len.id
-                    ? "bg-indigo-600/30 border-indigo-500 text-indigo-200 font-semibold"
-                    : "bg-slate-900/80 border-slate-800 text-slate-400 hover:text-slate-200"
+                    ? "bg-[#71cffe] text-[#172033] border-[#71cffe]"
+                    : "bg-[var(--surface)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)]"
                 }`}
               >
                 {len.label}
@@ -131,60 +132,60 @@ export function GeneratorControls({
         </div>
       )}
 
-      {/* Toggle Switches */}
-      <div className="space-y-3 pt-2 border-t border-slate-800">
+      {/* Switches / Checkboxes */}
+      <div className="sakode-card-section space-y-3">
         <label className="flex items-center justify-between cursor-pointer group">
-          <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">
+          <span className="text-xs font-bold text-[var(--text)] group-hover:text-[#71cffe] transition-colors">
             Mulai dengan frasa pembuka tema
           </span>
           <input
             type="checkbox"
             checked={options.startWithLorem}
             onChange={(e) => setOptions((prev) => ({ ...prev, startWithLorem: e.target.checked }))}
-            className="w-4 h-4 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-900 cursor-pointer"
+            className="w-4 h-4 rounded accent-[#71cffe] cursor-pointer"
           />
         </label>
 
         <label className="flex items-center justify-between cursor-pointer group">
-          <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">
+          <span className="text-xs font-bold text-[var(--text)] group-hover:text-[#71cffe] transition-colors">
             Sertakan Tag Format HTML (<code>&lt;p&gt;</code>, <code>&lt;li&gt;</code>)
           </span>
           <input
             type="checkbox"
             checked={options.includeHtml}
             onChange={(e) => setOptions((prev) => ({ ...prev, includeHtml: e.target.checked }))}
-            className="w-4 h-4 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-900 cursor-pointer"
+            className="w-4 h-4 rounded accent-[#71cffe] cursor-pointer"
           />
         </label>
 
         <label className="flex items-center justify-between cursor-pointer group">
-          <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">
-            Tambahkan Cetak Tebal (<b>bold</b>) & Miring (<i>italic</i>)
+          <span className="text-xs font-bold text-[var(--text)] group-hover:text-[#71cffe] transition-colors">
+            Tambahkan Format Tebal (<b>bold</b>) & Miring (<i>italic</i>)
           </span>
           <input
             type="checkbox"
             checked={options.addDecoration}
             onChange={(e) => setOptions((prev) => ({ ...prev, addDecoration: e.target.checked }))}
-            className="w-4 h-4 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-900 cursor-pointer"
+            className="w-4 h-4 rounded accent-[#71cffe] cursor-pointer"
           />
         </label>
 
         <label className="flex items-center justify-between cursor-pointer group">
-          <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors">
+          <span className="text-xs font-bold text-[var(--text)] group-hover:text-[#71cffe] transition-colors">
             Tambahkan Tag Kode Inline (<code>&lt;code&gt;</code>)
           </span>
           <input
             type="checkbox"
             checked={options.addCodeTags}
             onChange={(e) => setOptions((prev) => ({ ...prev, addCodeTags: e.target.checked }))}
-            className="w-4 h-4 rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-900 cursor-pointer"
+            className="w-4 h-4 rounded accent-[#71cffe] cursor-pointer"
           />
         </label>
       </div>
 
-      <div className="pt-2 text-[11px] text-slate-500 flex items-center gap-1.5">
-        <Info className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-        <span>Tip: Tekan <b>Ctrl + Enter</b> kapan saja untuk generate ulang cepat.</span>
+      <div className="p-3 bg-[var(--surface-subtle)] text-[11px] font-semibold text-[var(--text-muted)] flex items-center gap-1.5">
+        <Info className="w-3.5 h-3.5 text-[#71cffe] shrink-0" />
+        <span>Pintasan: Tekan <b>Ctrl + Enter</b> untuk generate ulang cepat.</span>
       </div>
     </div>
   );

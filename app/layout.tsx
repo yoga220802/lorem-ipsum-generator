@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Nunito, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { HistoryProvider } from "@/context/HistoryContext";
 import { Navbar } from "@/components/common/Navbar";
@@ -8,9 +9,11 @@ import { Footer } from "@/components/common/Footer";
 import { HistoryDrawer } from "@/components/common/HistoryDrawer";
 import { ToastContainer } from "@/components/common/ToastContainer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -21,8 +24,8 @@ const geistMono = Geist_Mono({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mocklab.sakode.com";
 
 export const viewport: Viewport = {
-  themeColor: "#0b0f19",
-  colorScheme: "dark",
+  themeColor: "#71cffe",
+  colorScheme: "dark light",
   width: "device-width",
   initialScale: 1,
 };
@@ -30,7 +33,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Sakode MockLab - All-in-One Mock & Dummy Data Toolkit Indonesia",
+    default: "Sakode MockLab — All-in-One Mock & Dummy Data Toolkit",
     template: "%s | Sakode MockLab",
   },
   description:
@@ -47,11 +50,11 @@ export const metadata: Metadata = {
     "placeholder image generator",
     "developer tools indonesia",
     "ui mock data generator",
-    "faker indonesia"
+    "sakode academy"
   ],
-  authors: [{ name: "Sakode", url: "https://sakode.com" }],
-  creator: "Sakode",
-  publisher: "Sakode",
+  authors: [{ name: "Sakode Academy", url: "https://sakode.com" }],
+  creator: "Sakode Academy",
+  publisher: "Sakode Academy",
   formatDetection: {
     email: false,
     address: false,
@@ -65,13 +68,13 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: SITE_URL,
     siteName: "Sakode MockLab",
-    title: "Sakode MockLab - All-in-One Mock & Dummy Data Toolkit",
+    title: "Sakode MockLab — All-in-One Mock & Dummy Data Toolkit",
     description:
-      "Generate teks dummy multi-tema, data profil user Indonesia realistis, dan placeholder gambar UI dalam hitungan detik.",
+      "Generate teks dummy multi-tema, data profil user Indonesia realistis, dan placeholder gambar UI dalam hitungan detik. Gratis tanpa registrasi.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sakode MockLab - All-in-One Mock Data Toolkit",
+    title: "Sakode MockLab — All-in-One Mock Data Toolkit",
     description:
       "Generator teks lorem multi-tema, data user Indonesia, dan image placeholder untuk developer & designer.",
     creator: "@sakode",
@@ -96,18 +99,18 @@ const jsonLd = {
   "@type": "WebApplication",
   name: "Sakode MockLab",
   url: SITE_URL,
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Any",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "All",
   description:
-    "All-in-one Mock Data & Placeholder Generator for Developers and UI/UX Designers, featuring Indonesian text themes, realistic Indonesian user data, and UI image placeholders.",
+    "All-in-one Mock Data & Placeholder Generator for Developers and UI/UX Designers by Sakode Academy.",
   offers: {
     "@type": "Offer",
     price: "0",
-    priceCurrency: "USD",
+    priceCurrency: "IDR",
   },
   author: {
     "@type": "Organization",
-    name: "Sakode",
+    name: "Sakode Academy",
     url: "https://sakode.com",
   },
   featureList: [
@@ -126,7 +129,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${nunito.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -136,26 +139,28 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white"
+        className="min-h-full flex flex-col selection:bg-sky-200 selection:text-slate-900"
         suppressHydrationWarning
       >
-        <ToastProvider>
-          <HistoryProvider>
-            <div className="min-h-screen flex flex-col justify-between">
-              <div>
-                <Navbar />
-                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
-                  {children}
-                </main>
+        <ThemeProvider>
+          <ToastProvider>
+            <HistoryProvider>
+              <div className="min-h-screen flex flex-col justify-between">
+                <div>
+                  <Navbar />
+                  <main className="max-w-[1280px] mx-auto px-4 sm:px-7 pt-8 pb-14 w-full">
+                    {children}
+                  </main>
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
 
-            {/* Global Overlays */}
-            <HistoryDrawer />
-            <ToastContainer />
-          </HistoryProvider>
-        </ToastProvider>
+              {/* Global Overlays */}
+              <HistoryDrawer />
+              <ToastContainer />
+            </HistoryProvider>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

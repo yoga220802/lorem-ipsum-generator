@@ -8,41 +8,41 @@ interface UserTableProps {
 export function UserTable({ users }: UserTableProps) {
   if (users.length === 0) {
     return (
-      <div className="glass-panel p-8 rounded-2xl text-center text-slate-400 text-xs italic">
-        Tidak ada data user yang sesuai dengan pencarian.
+      <div className="sakode-card p-8 text-center text-[var(--text-muted)] text-xs italic">
+        Tidak ada data pengguna yang cocok dengan filter pencarian.
       </div>
     );
   }
 
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto border border-slate-800">
-      <table className="w-full text-left text-xs text-slate-300">
-        <thead className="bg-slate-900/90 text-slate-400 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-800">
+    <div className="sakode-card overflow-x-auto">
+      <table className="w-full text-left text-xs text-[var(--text)]">
+        <thead className="bg-[var(--surface-subtle)] text-[var(--text-muted)] uppercase font-extrabold text-[10px] tracking-wider border-b border-[var(--border)]">
           <tr>
-            <th className="px-4 py-3">Nama Lengkap</th>
-            <th className="px-4 py-3">Gender</th>
-            <th className="px-4 py-3">NIK</th>
-            <th className="px-4 py-3">Email</th>
-            <th className="px-4 py-3">No. HP</th>
-            <th className="px-4 py-3">Pekerjaan</th>
-            <th className="px-4 py-3">Kota</th>
+            <th className="px-4 py-3.5">Nama Lengkap</th>
+            <th className="px-4 py-3.5">Gender</th>
+            <th className="px-4 py-3.5">NIK</th>
+            <th className="px-4 py-3.5">Email</th>
+            <th className="px-4 py-3.5">No. HP</th>
+            <th className="px-4 py-3.5">Pekerjaan</th>
+            <th className="px-4 py-3.5">Kota</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800/60">
+        <tbody className="divide-y divide-[var(--border)]">
           {users.map((u) => (
-            <tr key={u.id} className="hover:bg-slate-800/40 transition-colors">
-              <td className="px-4 py-3 font-semibold text-slate-100 flex items-center gap-2">
-                <img src={u.avatarUrl} alt="" className="w-6 h-6 rounded-full bg-slate-800" />
+            <tr key={u.id} className="hover:bg-[var(--surface-subtle)] transition-colors">
+              <td className="px-4 py-3 font-bold text-[var(--text)] flex items-center gap-2">
+                <img src={u.avatarUrl} alt="" className="w-6 h-6 rounded-full bg-[var(--surface-subtle)] border border-[var(--border)]" />
                 <span>{u.name}</span>
               </td>
-              <td className="px-4 py-3 text-slate-400">{u.gender}</td>
-              <td className="px-4 py-3 font-mono text-indigo-300">{u.nik}</td>
-              <td className="px-4 py-3 text-slate-300">{u.email}</td>
-              <td className="px-4 py-3 font-mono text-emerald-400">{u.phone}</td>
-              <td className="px-4 py-3 text-slate-200">
-                {u.profession} ({u.company})
+              <td className="px-4 py-3 text-[var(--text-muted)] font-semibold">{u.gender}</td>
+              <td className="px-4 py-3 font-mono font-bold text-[#bc71fe]">{u.nik}</td>
+              <td className="px-4 py-3 text-[var(--text)]">{u.email}</td>
+              <td className="px-4 py-3 font-mono font-bold text-[#10b981]">{u.phone}</td>
+              <td className="px-4 py-3 font-semibold text-[var(--text)]">
+                {u.profession} <span className="text-[var(--text-muted)] font-normal">({u.company})</span>
               </td>
-              <td className="px-4 py-3 text-slate-400">{u.city}</td>
+              <td className="px-4 py-3 text-[var(--text-muted)] font-semibold">{u.city}</td>
             </tr>
           ))}
         </tbody>

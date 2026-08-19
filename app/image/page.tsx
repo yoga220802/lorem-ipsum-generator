@@ -23,7 +23,8 @@ export default function ImagePage() {
     <>
       <SectionHeader
         titlePrefix="Generator"
-        gradientText="Placeholder Gambar"
+        highlightText="Placeholder Gambar"
+        highlightColor="text-[#f9723b]"
         titleSuffix="UI"
         description="Hasilkan URL placeholder gambar dengan dimensi kustom, rasio aspek, warna latar, dan overlay teks."
       />

@@ -23,7 +23,8 @@ export default function UsersPage() {
     <>
       <SectionHeader
         titlePrefix="Generator"
-        gradientText="Data User"
+        highlightText="Data User"
+        highlightColor="text-[#bc71fe]"
         titleSuffix="Indonesia"
         description="Hasilkan sampel profil pengguna lengkap dengan NIK, email, kontak, pekerjaan, dan foto avatar khas Indonesia."
       />

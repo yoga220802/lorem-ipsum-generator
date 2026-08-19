@@ -23,7 +23,8 @@ export default function HomePage() {
     <>
       <SectionHeader
         titlePrefix="Generator"
-        gradientText="Mock Teks & Lorem"
+        highlightText="Mock Teks & Lorem"
+        highlightColor="text-[#71cffe]"
         titleSuffix="Multi-Tema"
         description="Hasilkan teks Latin klasik, nusantara Indonesia, tech, bisnis buzzwords, hingga slang anak muda untuk placeholder desain UI Anda."
       />

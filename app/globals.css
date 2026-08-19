@@ -1,28 +1,75 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-page: #0f172a;
-    --bg-card: rgba(30, 41, 59, 0.7);
-    --bg-card-hover: rgba(51, 65, 85, 0.8);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-emerald: #10b981;
-    --accent-indigo: #6366f1;
-    --accent-violet: #8b5cf6;
-  }
+/* ══════════════════════════════════════════════
+   Sakode MockLab — Design System & Tokens
+   Sourced from Sakode Ecosystem & SIMADEP globals.css
+   ══════════════════════════════════════════════ */
 
-  body {
-    background-color: #0b0f19;
-    color: #f3f4f6;
-    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    min-height: 100vh;
-    background-image: 
-      radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-      radial-gradient(at 85% 85%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
-    background-attachment: fixed;
-  }
+:root {
+  /* Sakode Brand Colors */
+  --primary:        #71cffe;
+  --secondary:      #f9723b;
+  --accent:         #bc71fe;
+  --primary-soft:   #d9f1ff;
+  --secondary-soft: #fde8df;
+  --accent-soft:    #f0e3ff;
+
+  /* Surfaces & Backgrounds (Light) */
+  --bg:        #f7fbfe;
+  --surface:   #ffffff;
+  --surface-subtle: #f1f6fb;
+  --border:    #dbe8f0;
+  --border-hi: #b8d5e8;
+  --text:      #172033;
+  --text-muted:#64748b;
+
+  --danger:      #ef4444;
+  --danger-soft: #fef2f2;
+  --success:     #10b981;
+  --success-soft:#ecfdf5;
+
+  --r:      12px;
+  --r-sm:   8px;
+  --ease:   cubic-bezier(0.4, 0, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+[data-theme="dark"],
+.dark {
+  /* Surfaces & Backgrounds (Dark) */
+  --bg:        #0f1623;
+  --surface:   #1a2335;
+  --surface-subtle: #141c2b;
+  --border:    #263347;
+  --border-hi: #354a63;
+  --text:      #e8edf5;
+  --text-muted:#8b9ab5;
+
+  --primary-soft:   rgba(113, 207, 254, 0.12);
+  --secondary-soft: rgba(249, 114,  59, 0.12);
+  --accent-soft:    rgba(188, 113, 254, 0.12);
+  --danger-soft:    rgba(239,  68,  68, 0.12);
+  --success-soft:   rgba(16,  185, 129, 0.12);
+}
+
+/* ── Base Styles ────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-nunito), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 45%, transparent);
+  color: var(--text);
 }
 
 /* Custom Scrollbar */
@@ -31,48 +78,209 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--border-hi);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: var(--text-muted);
 }
 
-/* Glassmorphism Panels */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* ══ SAKODE DESIGN SYSTEM UTILITIES ════════════ */
+
+/* Sakode Cards */
+.sakode-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s var(--ease), background-color 0.25s, border-color 0.25s, transform 0.2s ease;
 }
 
-.glass-card {
-  background: rgba(30, 41, 59, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.2s ease-in-out;
+.sakode-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.05);
 }
 
-.glass-card:hover {
-  background: rgba(30, 41, 59, 0.85);
-  border-color: rgba(99, 102, 241, 0.4);
-  transform: translateY(-2px);
+.sakode-card-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.25s;
+}
+.sakode-card-section:last-child {
+  border-bottom: none;
 }
 
-/* Custom Input Ranges */
+/* Numbered Section Label */
+.sakode-lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.sakode-lbl-num {
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #172033;
+  flex-shrink: 0;
+}
+
+/* Primary Sakode Action Button */
+.btn-sakode-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary);
+  color: #172033;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
+  transition: opacity 0.15s, transform 0.18s var(--ease), box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn-sakode-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.btn-sakode-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Sakode Button */
+.btn-sakode-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+}
+
+.btn-sakode-secondary:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-hi);
+  transform: translateY(-1px);
+}
+
+/* Accent Button (Purple) */
+.btn-sakode-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 12px;
+  border-radius: var(--r-sm);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.btn-sakode-accent:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Inputs & Form Controls */
+input[type="text"],
+input[type="url"],
+input[type="tel"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.25s, color 0.25s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* Range Slider */
 input[type="range"] {
-  accent-color: #6366f1;
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--border);
+  cursor: pointer;
+  transition: transform 0.12s var(--spring), box-shadow 0.12s;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
 /* Toast Animations */
 @keyframes slideUpFade {
   from {
     opacity: 0;
-    transform: translateY(16px) scale(0.95);
+    transform: translateY(16px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -81,18 +289,31 @@ input[type="range"] {
 }
 
 .animate-toast {
-  animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpFade 0.22s var(--spring) forwards;
 }
 
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
-  }
+/* Stats Counter Box */
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  text-align: center;
 }
 
-.pulse-glow {
-  animation: pulseGlow 3s infinite ease-in-out;
+.about-stat-num {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.about-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
 }

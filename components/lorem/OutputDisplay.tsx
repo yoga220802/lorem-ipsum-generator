@@ -9,7 +9,8 @@ import {
   Search,
   Maximize2,
   Minimize2,
-  RefreshCw
+  RefreshCw,
+  FileCode2
 } from "lucide-react";
 import { ExportFormat } from "@/types/lorem";
 import { HighlightedText } from "./HighlightedText";
@@ -53,19 +54,19 @@ export function OutputDisplay({
   onBookmark
 }: OutputDisplayProps) {
   return (
-    <div className="space-y-4">
-      {/* Top Bar: View Format Tabs & Action Buttons */}
-      <div className="glass-panel p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
-        {/* View Format Tabs */}
-        <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+    <div className="sakode-card flex flex-col overflow-hidden">
+      {/* Top Toolbar */}
+      <div className="sakode-card-section flex flex-wrap items-center justify-between gap-3 bg-[var(--surface)]">
+        {/* Format Selector (Sakode Pill Style) */}
+        <div className="flex items-center gap-1 bg-[var(--bg)] p-1 rounded-[var(--r-sm)] border border-[var(--border)]">
           {FORMAT_TABS.map((fmt) => (
             <button
               key={fmt.id}
               onClick={() => setViewFormat(fmt.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-[6px] text-xs font-bold transition-all cursor-pointer ${
                 viewFormat === fmt.id
-                  ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-[var(--surface)] text-[var(--text)] shadow-xs border border-[var(--border)] font-extrabold"
+                  : "text-[var(--text-muted)] hover:text-[var(--text)]"
               }`}
             >
               {fmt.label}
@@ -73,11 +74,12 @@ export function OutputDisplay({
           ))}
         </div>
 
-        {/* Actions Bar */}
+        {/* Action Buttons */}
         <div className="flex items-center gap-1.5 flex-wrap">
           <button
             onClick={() => onCopy(viewFormat)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
+            className="btn-sakode-primary text-xs py-1.5 px-3.5"
+            title="Salin ke clipboard"
           >
             {copiedFormat === viewFormat ? (
               <Check className="w-3.5 h-3.5" />
@@ -89,7 +91,7 @@ export function OutputDisplay({
 
           <button
             onClick={onDownload}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700 transition-colors cursor-pointer"
+            className="btn-sakode-secondary text-xs py-1.5 px-3"
             title="Unduh file"
           >
             <Download className="w-3.5 h-3.5" />
@@ -98,52 +100,54 @@ export function OutputDisplay({
 
           <button
             onClick={onBookmark}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700 transition-colors cursor-pointer"
+            className="btn-sakode-secondary text-xs py-1.5 px-3"
             title="Simpan ke Riwayat"
           >
-            <Bookmark className="w-3.5 h-3.5 text-amber-400" />
+            <Bookmark className="w-3.5 h-3.5 text-[#f9723b]" />
             <span className="hidden sm:inline">Simpan</span>
           </button>
 
           <button
             onClick={() => setIsFullScreen(!isFullScreen)}
-            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors cursor-pointer"
+            className="btn-sakode-secondary text-xs p-2"
             title={isFullScreen ? "Kecilkan Layar" : "Layar Penuh"}
           >
-            {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullScreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-500" />
-        <input
-          type="text"
-          placeholder="Cari kata kunci dalam teks hasil..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-900/80 border border-slate-800 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-        />
+      {/* Filter / Search inside output */}
+      <div className="px-5 py-2.5 bg-[var(--surface-subtle)] border-b border-[var(--border)]">
+        <div className="relative">
+          <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[var(--text-muted)]" />
+          <input
+            type="text"
+            placeholder="Cari kata kunci dalam teks..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-[var(--r-sm)] bg-[var(--surface)] border border-[var(--border)] text-[var(--text)]"
+          />
+        </div>
       </div>
 
       {/* Text Output Box */}
       <div
-        className={`glass-panel rounded-2xl p-5 overflow-y-auto font-mono text-sm leading-relaxed border border-slate-800 bg-slate-950/60 ${
+        className={`p-6 overflow-y-auto font-mono text-xs sm:text-sm leading-relaxed bg-[var(--bg)] transition-colors ${
           isFullScreen ? "h-[75vh]" : "min-h-[320px] max-h-[500px]"
         }`}
       >
         {isPending ? (
-          <div className="flex flex-col items-center justify-center h-48 space-y-3 text-slate-400">
-            <RefreshCw className="w-6 h-6 animate-spin text-indigo-400" />
-            <p className="text-xs">Menggenerasi teks baru...</p>
+          <div className="flex flex-col items-center justify-center h-48 space-y-3 text-[var(--text-muted)]">
+            <RefreshCw className="w-6 h-6 animate-spin text-[#71cffe]" />
+            <p className="text-xs font-bold">Menggenerasi teks baru...</p>
           </div>
         ) : lines.length === 0 ? (
-          <p className="text-slate-500 text-xs italic">Belum ada teks yang digenerasi.</p>
+          <p className="text-[var(--text-muted)] text-xs italic">Belum ada teks yang digenerasi.</p>
         ) : (
-          <div className="whitespace-pre-wrap selection:bg-indigo-500 selection:text-white">
+          <div className="whitespace-pre-wrap selection:bg-[#71cffe] selection:text-[#172033] text-[var(--text)]">
             {viewFormat === "json" ? (
-              <pre className="text-emerald-400 text-xs font-mono">{currentFormattedText}</pre>
+              <pre className="text-[#10b981] text-xs font-mono">{currentFormattedText}</pre>
             ) : (
               <HighlightedText text={currentFormattedText} highlight={searchQuery} />
             )}

@@ -7,25 +7,33 @@ interface TextStatsFooterProps {
 
 export function TextStatsFooter({ stats }: TextStatsFooterProps) {
   return (
-    <div className="glass-panel p-4 rounded-2xl grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-      <div className="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80">
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Kata</span>
-        <span className="text-base font-bold text-indigo-400">{stats.words.toLocaleString("id-ID")}</span>
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="about-stat">
+        <span className="about-stat-num text-[#71cffe]">
+          {stats.words.toLocaleString("id-ID")}
+        </span>
+        <span className="about-stat-label">Total Kata</span>
       </div>
 
-      <div className="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80">
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Karakter</span>
-        <span className="text-base font-bold text-emerald-400">{stats.charactersWithSpaces.toLocaleString("id-ID")}</span>
+      <div className="about-stat">
+        <span className="about-stat-num text-[#10b981]">
+          {stats.charactersWithSpaces.toLocaleString("id-ID")}
+        </span>
+        <span className="about-stat-label">Total Karakter</span>
       </div>
 
-      <div className="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80">
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Kalimat</span>
-        <span className="text-base font-bold text-amber-400">{stats.sentences}</span>
+      <div className="about-stat">
+        <span className="about-stat-num text-[#bc71fe]">
+          {stats.sentences}
+        </span>
+        <span className="about-stat-label">Total Kalimat</span>
       </div>
 
-      <div className="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80">
-        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Waktu Baca</span>
-        <span className="text-base font-bold text-pink-400">{stats.readingTimeFormatted}</span>
+      <div className="about-stat">
+        <span className="about-stat-num text-[#f9723b]">
+          {stats.readingTimeFormatted}
+        </span>
+        <span className="about-stat-label">Waktu Baca</span>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, BookOpen, Compass, Code2, Briefcase, Smile, Utensils } from "lucide-react";
+import { BookOpen, Compass, Code2, Briefcase, Smile, Utensils } from "lucide-react";
 import { PRESET_THEMES } from "@/lib/data/themes";
 
 interface ThemeSelectorProps {
@@ -10,23 +10,25 @@ interface ThemeSelectorProps {
 }
 
 const THEME_ICONS: Record<string, React.ReactNode> = {
-  latin: <BookOpen className="w-5 h-5 text-indigo-300" />,
-  nusantara: <Compass className="w-5 h-5 text-emerald-400" />,
-  tech: <Code2 className="w-5 h-5 text-indigo-400" />,
-  corporate: <Briefcase className="w-5 h-5 text-amber-400" />,
-  slang: <Smile className="w-5 h-5 text-pink-400" />,
-  foodie: <Utensils className="w-5 h-5 text-rose-400" />
+  latin: <BookOpen className="w-5 h-5 text-[#71cffe]" />,
+  nusantara: <Compass className="w-5 h-5 text-[#10b981]" />,
+  tech: <Code2 className="w-5 h-5 text-[#bc71fe]" />,
+  corporate: <Briefcase className="w-5 h-5 text-[#f9723b]" />,
+  slang: <Smile className="w-5 h-5 text-[#ec4899]" />,
+  foodie: <Utensils className="w-5 h-5 text-[#f59e0b]" />
 };
 
 export function ThemeSelector({ selectedThemeId, onSelectTheme }: ThemeSelectorProps) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-indigo-400" />
-          Pilih Tema & Gaya Teks
-        </h2>
-        <span className="text-xs text-slate-400">6 Pilihan Khas Indonesia & Latin</span>
+      <div className="flex items-center justify-between mb-3">
+        <div className="sakode-lbl">
+          <div className="sakode-lbl-num">1</div>
+          <span>Pilih Tema & Gaya Teks</span>
+        </div>
+        <span className="text-xs font-bold text-[var(--text-muted)]">
+          6 Pilihan Bahasa & Nuansa
+        </span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -36,28 +38,32 @@ export function ThemeSelector({ selectedThemeId, onSelectTheme }: ThemeSelectorP
             <button
               key={theme.id}
               onClick={() => onSelectTheme(theme.id)}
-              className={`relative flex flex-col items-start p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+              className={`sakode-card p-3.5 flex flex-col items-start text-left cursor-pointer transition-all ${
                 isSelected
-                  ? "bg-indigo-950/60 border-indigo-500 text-white shadow-lg shadow-indigo-500/10 ring-1 ring-indigo-500/40"
-                  : "bg-slate-900/60 border-slate-800/80 text-slate-300 hover:bg-slate-800/60 hover:border-slate-700"
+                  ? "border-[#71cffe] ring-2 ring-[#71cffe]/20 bg-[var(--primary-soft)]"
+                  : "hover:border-[var(--border-hi)]"
               }`}
             >
-              <div className="flex items-center justify-between w-full mb-2">
-                <div className="p-2 rounded-lg bg-slate-950/60 border border-slate-800">
+              <div className="flex items-center justify-between w-full mb-2.5">
+                <div className="p-2 rounded-[var(--r-sm)] bg-[var(--surface)] border border-[var(--border)] shadow-xs">
                   {THEME_ICONS[theme.id]}
                 </div>
                 <span
-                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+                  className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${
                     isSelected
-                      ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/40"
-                      : "bg-slate-800 text-slate-400 border-slate-700"
+                      ? "bg-[#71cffe] text-[#172033] border-[#71cffe]"
+                      : "bg-[var(--surface-subtle)] text-[var(--text-muted)] border-[var(--border)]"
                   }`}
                 >
                   {theme.badge}
                 </span>
               </div>
-              <span className="font-semibold text-sm leading-snug line-clamp-1">{theme.name}</span>
-              <span className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">{theme.subtitle}</span>
+              <span className="font-extrabold text-xs sm:text-sm text-[var(--text)] leading-snug line-clamp-1">
+                {theme.name}
+              </span>
+              <span className="text-[11px] font-semibold text-[var(--text-muted)] line-clamp-1 mt-0.5">
+                {theme.subtitle}
+              </span>
             </button>
           );
         })}
