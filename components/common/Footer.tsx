@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Sparkles, Command, Heart } from "lucide-react";
 
