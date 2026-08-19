@@ -4,9 +4,18 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 import { LoremGenerator } from "@/components/lorem/LoremGenerator";
 
 export const metadata: Metadata = {
-  title: "Generator Lorem Ipsum & Teks Dummy Indonesia",
+  title: "Generator Teks Mock & Lorem Ipsum Multi-Tema",
   description:
-    "Hasilkan teks Latin klasik Cicero, tema nusantara Indonesia, istilah developer tech, corporate buzzwords, dan bahasa gaul anak muda untuk mockup desain Anda."
+    "Generate teks dummy & placeholder siap pakai dalam 6 gaya bahasa: Latin klasik Cicero, tema budaya Nusantara Indonesia, istilah developer Tech, Corporate buzzwords, hingga Slang anak muda.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Generator Teks Mock & Lorem Ipsum Multi-Tema | Sakode MockLab",
+    description:
+      "Teks placeholder Latin, Nusantara Indonesia, Tech, Corporate, dan Slang untuk prototyping UI web & mobile.",
+    url: "/",
+  }
 };
 
 export default function HomePage() {
@@ -14,8 +23,8 @@ export default function HomePage() {
     <>
       <SectionHeader
         titlePrefix="Generator"
-        gradientText="Lorem Ipsum"
-        titleSuffix="& Teks Dummy"
+        gradientText="Mock Teks & Lorem"
+        titleSuffix="Multi-Tema"
         description="Hasilkan teks Latin klasik, nusantara Indonesia, tech, bisnis buzzwords, hingga slang anak muda untuk placeholder desain UI Anda."
       />
       <LoremGenerator />

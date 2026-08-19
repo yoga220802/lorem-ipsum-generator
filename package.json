@@ -1,6 +1,7 @@
 {
-  "name": "sakode-lorem-ipsum-generator",
-  "version": "0.1.0",
+  "name": "sakode-mocklab",
+  "version": "2.0.0",
+  "description": "All-in-One Mock & Dummy Data Toolkit Indonesia for Developers & Designers",
   "private": true,
   "scripts": {
     "dev": "next dev",

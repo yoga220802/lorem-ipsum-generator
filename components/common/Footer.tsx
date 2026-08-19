@@ -1,5 +1,6 @@
 import React from "react";
-import { Sparkles, Command, Heart } from "lucide-react";
+import Link from "next/link";
+import { Sparkles, Command, Heart, ExternalLink } from "lucide-react";
 
 export function Footer() {
   return (
@@ -12,10 +13,12 @@ export function Footer() {
               <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-emerald-400" />
               </div>
-              <span className="font-bold text-base text-white">Sakode Ipsum</span>
+              <span className="font-bold text-base text-white">
+                Sakode<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">MockLab</span>
+              </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Generator Teks Dummy & Placeholder Indonesia tercepat, fleksibel, dan kaya fitur untuk developer, designer, dan content writer.
+              All-in-One Mock & Dummy Data Toolkit Indonesia: Teks dummy multi-tema (Nusantara, Tech, Corporate, Slang), generator profil user realistis, dan placeholder gambar untuk kebutuhan prototyping & development.
             </p>
           </div>
 
@@ -32,9 +35,9 @@ export function Footer() {
                 </kbd>
               </li>
               <li className="flex items-center justify-between">
-                <span>Salin Teks ke Clipboard:</span>
+                <span>Salin Data:</span>
                 <kbd className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 font-mono text-[11px] text-indigo-300">
-                  Salin Tombol
+                  Tombol Salin
                 </kbd>
               </li>
             </ul>
@@ -43,7 +46,7 @@ export function Footer() {
           {/* Features Col */}
           <div className="space-y-3">
             <h4 className="font-semibold text-xs text-slate-300 uppercase tracking-wider">
-              Fitur Unggulan
+              Modul & Fitur Unggulan
             </h4>
             <div className="flex flex-wrap gap-1.5">
               {[
@@ -52,9 +55,10 @@ export function Footer() {
                 "Tech & Coding Terms",
                 "Corporate Buzzwords",
                 "Bahasa Gaul Slang",
+                "Kuliner & Foodie",
                 "Dummy User Indonesia",
-                "Placeholder Gambar",
-                "Ekspor HTML & Markdown"
+                "Placeholder Gambar UI",
+                "Ekspor HTML, MD & CSV"
               ].map((ft) => (
                 <span
                   key={ft}
@@ -71,9 +75,9 @@ export function Footer() {
           <p className="flex items-center gap-1">
             <span>Dibuat dengan</span>
             <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            <span>untuk Komunitas Developer Indonesia oleh Sakode.</span>
+            <span>untuk Komunitas Developer & Designer Indonesia oleh Sakode.</span>
           </p>
-          <p>© {new Date().getFullYear()} Sakode Lorem Ipsum Generator.</p>
+          <p>© {new Date().getFullYear()} Sakode MockLab. All rights reserved.</p>
         </div>
       </div>
     </footer>
